@@ -1,0 +1,71 @@
+---
+import "../styles/global.css";
+import { site } from "../data/site";
+import { t } from "../data/ui";
+
+interface Props {
+	title: string;
+	description?: string;
+	lang?: string;
+}
+
+const { title, description = t.tagline, lang = site.defaultLocale } = Astro.props;
+
+const navItems = [
+	{ href: "/", label: t.nav.home },
+	{ href: "/projects", label: t.nav.projects },
+	{ href: "/contact", label: t.nav.contact },
+];
+
+// Trailing slashes vary between dev and the built output, so normalise first.
+const currentPath = Astro.url.pathname.replace(/\/+$/, "") || "/";
+---
+
+<html lang={lang}>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<meta name="color-scheme" content="dark light" />
+		<title>{title} — {site.name}</title>
+	</head>
+	<body>
+		<a class="skip-link" href="#main">{t.skipToContent}</a>
+		<div class="shell">
+			<header class="site-header">
+				<a class="wordmark" href="/">{site.name}</a>
+				<nav class="site-nav" aria-label={t.nav.label}>
+					<ul>
+						{
+							navItems.map(({ href, label }) => (
+								<li>
+									<a href={href} aria-current={currentPath === href ? "page" : undefined}>
+										{label}
+									</a>
+								</li>
+							))
+						}
+					</ul>
+				</nav>
+			</header>
+			<main id="main">
+				<slot />
+			</main>
+			<footer class="site-footer">
+				<p>&copy; {new Date().getFullYear()} {site.name}</p>
+				<ul>
+					{
+						site.links.map(({ href, label }) => (
+							<li>
+								<a href={href}>{label}</a>
+							</li>
+						))
+					}
+				</ul>
+			</footer>
+		</div>
+	</body>
+</html>

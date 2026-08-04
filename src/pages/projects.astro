@@ -1,0 +1,33 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import { t } from "../data/ui";
+
+const projects = (await getCollection("projects")).sort(
+	(a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf(),
+);
+---
+
+<BaseLayout
+	title={t.nav.projects}
+	description="Client engagements from Smart TV and set-top box development to full stack web work."
+>
+	<h1>{t.allProjects}</h1>
+	<p>
+		Client engagements, most recent first. Several of these were consulting
+		assignments, so both the consultancy and the end client are named where
+		relevant.
+	</p>
+
+	{projects.map((entry) => <ProjectCard entry={entry} showBody />)}
+
+	<h2>{t.earlierRoles}</h2>
+	<p>
+		Before Tieto: a junior assistant role at Nordisk Film TV (2006–2007) on
+		<i>Kaikki Maalit</i>, an SM-liiga ice hockey highlights show aired on Nelonen —
+		match highlights, timestamping and writing announcements. Earlier still,
+		frontend work in HTML and XSLT plus UI customisation for a .NET multi-channel
+		messaging tool at Melement Oy (2002–2003).
+	</p>
+</BaseLayout>
