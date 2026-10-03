@@ -1,6 +1,6 @@
 # personal-portfolio
 
-Source for my personal site: [personal-portfolio-nvipero1.vercel.app](https://personal-portfolio-nvipero1.vercel.app)
+Source for my personal site: [nvipero-portfolio.vercel.app](https://nvipero-portfolio.vercel.app)
 
 A small static site — home, project history, contact — built with Astro and
 deliberately kept dependency-light. No UI framework, no CSS framework, no image
